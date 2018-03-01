@@ -1,0 +1,28 @@
+{%- for bind in salt['pillar.get']('i3:bindsym', []) %}
+bindsym {{ bind }}
+{%- endfor %}
+{%- set font = salt['pillar.get']('i3:font', []) %}
+font {{ font }}
+{%- for exe in salt['pillar.get']('i3:exec', []) %}
+exec {{ exe }}
+{%- endfor %}
+set {{ salt['pillar.get']('i3:set', []) }}
+floating_modifier {{ salt['pillar.get']('i3:floating_modifier', []) }}
+mode "resize" {
+{%- for line in salt['pillar.get']('i3:mode:resize', []) %}
+{{ line }}
+{%- endfor %}
+}
+bar {
+{%- for key,value in salt['pillar.get']('i3:bar', []).items() %}
+{%- if key == 'colors' %}
+{{key}} { 
+{%- for item,value in value.items() %}
+{{item}} {{value}}
+{%- endfor %}
+}
+{% else %}
+{{key}} {{value}}
+{%- endif %}
+{%- endfor %}
+}
