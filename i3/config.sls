@@ -1,3 +1,6 @@
+include:
+  - i3
+
 create i3 config file:
   file.managed:
     - name: /etc/i3/config
